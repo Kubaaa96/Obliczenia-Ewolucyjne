@@ -1,6 +1,4 @@
-
-
-from PyQt6.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QCheckBox, \
+from PyQt6.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QLabel, QComboBox, QCheckBox, \
     QPushButton
 from PyQt6.QtCore import QPoint, QSize
 
@@ -77,21 +75,21 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(selection_label)
 
         selection_combobox = QComboBox()
-        # TODO types of selection methods
+        selection_combobox.addItems(["BEST", "ROULETTE", "TOURNAMENT"])
         main_layout.addWidget(selection_combobox)
 
         cross_label = QLabel("Choose cross method")
         main_layout.addWidget(cross_label)
 
         cross_combobox = QComboBox()
-        # TODO types of cross methods
+        cross_combobox.addItems(["One Point", "Two points", "Three points", "Homo"])
         main_layout.addWidget(cross_combobox)
 
         mutation_label = QLabel("Choose mutation method")
         main_layout.addWidget(mutation_label)
 
         mutation_combobox = QComboBox()
-        # TODO types of mutation methods
+        mutation_combobox.addItems(["One Point", "Two Points"])
         main_layout.addWidget(mutation_combobox)
 
         maximization_checkbox = QCheckBox("Maximization")
