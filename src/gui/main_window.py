@@ -90,7 +90,6 @@ class MainWindow(QMainWindow):
         selection_label = QLabel("Choose selection method")
         main_layout.addWidget(selection_label)
 
-        # self.selection_combobox.addItems([str(method).split('.')[1] for method in SelectionMethods])
         self.selection_combobox.addItems(self.get_string_values_from(SelectionMethods))
         main_layout.addWidget(self.selection_combobox)
 
