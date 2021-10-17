@@ -2,11 +2,11 @@ from PyQt6.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QLabel
     QPushButton
 from PyQt6.QtCore import QPoint, QSize
 
-from src.core.selection_methods import SelectionMethods
-from src.core.cross_methods import CrossMethods
-from src.core.mutation_methods import MutationMethods
-from src.core.parameters import Parameters
-from src.gui.utils.wrong_type_dialog import WrongTypeDialog
+from core.selection_methods import SelectionMethods
+from core.cross_methods import CrossMethods
+from core.mutation_methods import MutationMethods
+from core.parameters import Parameters
+from gui.utils.wrong_type_dialog import WrongTypeDialog
 
 
 class MainWindow(QMainWindow):
@@ -14,7 +14,6 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         self.setup_window()
-
         self.begin_range_lineedit = QLineEdit()
         self.end_range_lineedit = QLineEdit()
         self.population_amount_lineedit = QLineEdit()

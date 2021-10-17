@@ -1,6 +1,6 @@
-from src.core.selection_methods import SelectionMethods
-from src.core.cross_methods import CrossMethods
-from src.core.mutation_methods import MutationMethods
+from core.selection_methods import SelectionMethods
+from core.cross_methods import CrossMethods
+from core.mutation_methods import MutationMethods
 
 
 class Parameters:
