@@ -16,4 +16,4 @@ Optional: `source venv/bin/activate`
 
 Na windowsie pewnie bedzie podobnie. A jak nie chcecie venva to po wystarczy zainstalować PyQt6
 
-![Example](https://raw.githubusercontent.com/Kubaaa96/Obliczenia-Ewolucyjne-1/feature/gui/imgs/2021-10-17_14-02-02.gif)
+![Example](https://github.com/Kubaaa96/Obliczenia-Ewolucyjne-1/blob/master/imgs/2021-10-17_14-02-02.gif?raw=true)
