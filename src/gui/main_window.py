@@ -133,13 +133,13 @@ class MainWindow(QMainWindow):
 
     def validate_and_insert_widgets(self) -> Parameters:
         parameters = Parameters()
-        parameters.begin_range = self.validate_numbers(self.begin_range_lineedit, "Not numerical Begin Range Value")
-        parameters.end_range = self.validate_numbers(self.end_range_lineedit, "Not Numerical End Range Value")
-        parameters.population_amount = self.validate_numbers(self.population_amount_lineedit, "Not Numerical Population Amount Value")
-        parameters.number_of_bits = self.validate_numbers(self.number_of_bits_lineedit, "Not Numerical Number of Bits Value")
-        parameters.epochs_amount = self.validate_numbers(self.epochs_amount_lineedit, "Not Numerical Epochs Amount Value")
-        parameters.best_tournament_amount = self.validate_numbers(self.best_tournament_amount_lineedit, "Not Numerical Best Tournament Amount Value")
-        parameters.elite_amount = self.validate_numbers(self.elite_amount_lineedit, "Not Numerical Elite Amount Value")
+        parameters.begin_range = self.validate_numbers(self.begin_range_lineedit, "Not numerical Begin Range Value", float)
+        parameters.end_range = self.validate_numbers(self.end_range_lineedit, "Not Numerical End Range Value", float)
+        parameters.population_amount = self.validate_numbers(self.population_amount_lineedit, "Not Numerical Population Amount Value", int)
+        parameters.number_of_bits = self.validate_numbers(self.number_of_bits_lineedit, "Not Numerical Number of Bits Value", int)
+        parameters.epochs_amount = self.validate_numbers(self.epochs_amount_lineedit, "Not Numerical Epochs Amount Value", int)
+        parameters.best_tournament_amount = self.validate_numbers(self.best_tournament_amount_lineedit, "Not Numerical Best Tournament Amount Value", int)
+        parameters.elite_amount = self.validate_numbers(self.elite_amount_lineedit, "Not Numerical Elite Amount Value", int)
         parameters.cross_prob = self.validate_probability(self.cross_prob_lineedit, "Not Numerical Cross Probability Value")
         parameters.mutation_prob = self.validate_probability(self.mutation_prob_lineedit, "Not Numerical Mutation Probability Value")
         parameters.inversion_prob = self.validate_probability(self.inversion_prob_lineedit, "Not Numerical Inversion Probability Value")
@@ -147,11 +147,12 @@ class MainWindow(QMainWindow):
         parameters.cross_method = CrossMethods(self.cross_combobox.currentIndex())
         parameters.mutation_method = MutationMethods(self.mutation_combobox.currentIndex())
         parameters.maximization = self.maximization_checkbox.isChecked()
+        self.validate_ranges(parameters.begin_range, parameters.end_range)
         return parameters
 
-    def validate_numbers(self, lineedit, info_to_print_if_not_valid):
+    def validate_numbers(self, lineedit, info_to_print_if_not_valid, data_type):
         try:
-            value = float(lineedit.text())
+            value = data_type(lineedit.text())
             return value
         except ValueError as error:
             self.not_valid_widgets.append(info_to_print_if_not_valid + ": " + error.__str__())
@@ -165,3 +166,7 @@ class MainWindow(QMainWindow):
             return value
         except ValueError as error:
             self.not_valid_widgets.append(info_to_print_if_not_valid + ": " + error.__str__())
+
+    def validate_ranges(self, begin_range, end_range):
+        if begin_range >= end_range:
+            self.not_valid_widgets.append("Wrong Ranges. Begin needs to be smaller than end")

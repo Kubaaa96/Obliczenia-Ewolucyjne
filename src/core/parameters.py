@@ -4,16 +4,16 @@ from core.mutation_methods import MutationMethods
 
 
 class Parameters:
-    begin_range: int
-    end_range: int
+    begin_range: float
+    end_range: float
     population_amount: int
     number_of_bits: int
     epochs_amount: int
     best_tournament_amount: int
     elite_amount: int
-    cross_prob: int
-    mutation_prob: int
-    inversion_prob: int
+    cross_prob: float
+    mutation_prob: float
+    inversion_prob: float
     selection_method: SelectionMethods
     cross_method: CrossMethods
     mutation_method: MutationMethods
