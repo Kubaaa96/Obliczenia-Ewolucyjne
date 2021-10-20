@@ -7,6 +7,7 @@ from core.cross_methods import CrossMethods
 from core.mutation_methods import MutationMethods
 from core.parameters import Parameters
 from gui.utils.wrong_type_dialog import WrongTypeDialog
+from genetics.genetic_algorithm import GeneticAlgorithm
 
 
 class MainWindow(QMainWindow):
@@ -125,9 +126,8 @@ class MainWindow(QMainWindow):
             dialog = WrongTypeDialog(self.not_valid_widgets)
             dialog.exec()
         else:
-            print("Perform operations")
-            print(parameters)
-            # TODO perform operation function here which take parameters as argument
+            genetic_algorithm = GeneticAlgorithm(parameters)
+            genetic_algorithm.perform_operations()
 
         self.not_valid_widgets.clear()
 
