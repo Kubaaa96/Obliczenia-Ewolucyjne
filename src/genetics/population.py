@@ -10,6 +10,10 @@ class Population:
         print(self.population_size)
         self.population_list = []
         self.prepared_to_crossing = []
+        self.mutation_prob = self.parameters.mutation_prob              # MUTATION
+        self.num_of_bits = self.parameters.number_of_bits               # MUTATION
+        self.elite_amount = self.parameters.elite_amount                # MUTATION
+        self.prepared_after_elite = []                                  # ELITE STRATEGY
 
     def create_population(self):
         for _ in range(self.population_size):
@@ -81,3 +85,100 @@ class Population:
 
     # TODO roulette_selection() -> deleted due to issue in implementation
     # New solution in progress
+
+    # -----------------------------------------------ELITE-----------------------------------------------
+    # prepared_after_elite to tablica ktora ma osobnikow wybranych z elitarnej strategii
+    # na samym koncu trzeba ja dopisac do listy z osobnikami po wszystkich przejsciach
+    #
+    def elite_strategy(self):
+        for elite_boy in range(0, self.elite_amount):
+            self.prepared_after_elite.append(self.prepared_to_crossing[elite_boy])  # objects after elite strategy
+
+    # ----------------------------------------------MUTATION----------------------------------------------
+    # pobierane jest prepared_to_crossing z selekcji dlatego ze to jedyna tablica z osobnikami na ten moment.
+    # powinna byc pobierana tablica z krzyzowania, ale jeszcze jej nie ma. zwracane tez jest prepared_to_crossing
+    # tylko ze z podmienionymi osobnikami
+
+    def side_mutation(self):
+        for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
+            rand_chance = random.uniform(0, 1)
+
+            if self.mutation_prob <= rand_chance:
+                x1 = self.prepared_to_crossing[i].x1.individual_coded
+                x2 = self.prepared_to_crossing[i].x2.individual_coded
+
+                if x1[-1] == '0':
+                    x1 = x1[:-1] + '1'
+                else:
+                    x1 = x1[:-1] + '0'
+
+                if x2[-1] == '0':
+                    x2 = x1[:-1] + '1'
+                else:
+                    x2 = x1[:-1] + '0'
+
+                x1 = self.prepared_to_crossing[i].x1.individual_decoded
+                x2 = self.prepared_to_crossing[i].x2.individual_decoded
+                self.prepared_to_crossing[i] = x1, x2
+
+    def one_point_mutation(self):
+        for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
+            rand_chance = random.uniform(0, 1)
+
+            if self.mutation_prob <= rand_chance:
+                x1 = self.prepared_to_crossing[i].x1.individual_coded
+                x2 = self.prepared_to_crossing[i].x2.individual_coded
+
+                random_point = random.randint(0, len(x1))
+                if x1[random_point] == '0':
+                    x1 = x1[:random_point] + '1' + x1[random_point+1:]
+                else:
+                    x1 = x1[:random_point] + '0' + x1[random_point+1:]
+
+                if x2[random_point] == '0':
+                    x2 = x2[:random_point] + '1' + x2[random_point+1:]
+                else:
+                    x2 = x2[:random_point] + '0' + x2[random_point+1:]
+
+                x1 = self.prepared_to_crossing[i].x1.individual_decoded
+                x2 = self.prepared_to_crossing[i].x2.individual_decoded
+                self.prepared_to_crossing[i] = x1, x2
+                print("asa", self.prepared_to_crossing)
+
+    def two_point_mutation(self):
+        for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
+            rand_chance = random.uniform(0, 1)
+
+            if self.mutation_prob <= rand_chance:
+                x1 = self.prepared_to_crossing[i].x1.individual_coded
+                x2 = self.prepared_to_crossing[i].x2.individual_coded
+
+                random_point1 = random.randint(0, len(x1))
+                random_point2 = random.randint(0, len(x1))
+                while random_point1 == random_point2:
+                    random_point2 = random.randint(0, len(x1))
+
+                if x1[random_point1] == '0':
+                    x1 = x1[:random_point1] + '1' + x1[random_point1 + 1:]
+                else:
+                    x1 = x1[:random_point1] + '0' + x1[random_point1 + 1:]
+
+                if x1[random_point2] == '0':
+                    x1 = x1[:random_point2] + '1' + x1[random_point2 + 1:]
+                else:
+                    x1 = x1[:random_point2] + '0' + x1[random_point2 + 1:]
+
+                if x2[random_point1] == '0':
+                    x2 = x2[:random_point1] + '1' + x2[random_point1 + 1:]
+                else:
+                    x2 = x2[:random_point1] + '0' + x2[random_point1 + 1:]
+
+                if x2[random_point2] == '0':
+                    x2 = x2[:random_point2] + '1' + x2[random_point2 + 1:]
+                else:
+                    x2 = x2[:random_point2] + '0' + x2[random_point2 + 1:]
+
+                x1 = self.prepared_to_crossing[i].x1.individual_decoded
+                x2 = self.prepared_to_crossing[i].x2.individual_decoded
+
+                self.prepared_to_crossing[i] = x1, x2
