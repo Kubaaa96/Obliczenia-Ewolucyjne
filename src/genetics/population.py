@@ -167,6 +167,9 @@ class Population:
                     single_gen_list2[random_point] = '1'
                 single_gen1 = ''.join(single_gen_list1)
                 single_gen2 = ''.join(single_gen_list2)
+                population[i].x1.individual_coded = single_gen1
+                population[i].x2.individual_coded = single_gen2
+            self.population_list = population
 
     def two_point_mutation(self):
         population = self.population_list
@@ -202,6 +205,9 @@ class Population:
                     single_gen_list2[random_point2] = '1'
                 single_gen1 = ''.join(single_gen_list1)
                 single_gen2 = ''.join(single_gen_list2)
+                population[i].x1.individual_coded = single_gen1
+                population[i].x2.individual_coded = single_gen2
+            self.population_list = population
 
     def side_mutation(self):
         population = self.population_list
@@ -224,6 +230,9 @@ class Population:
                     single_gen_list2[-1] = '1'
                 single_gen1 = ''.join(single_gen_list1)
                 single_gen2 = ''.join(single_gen_list2)
+                population[i].x1.individual_coded = single_gen1
+                population[i].x2.individual_coded = single_gen2
+            self.population_list = population
 
     def mutation(self):
         if self.parameters.mutation_method == MutationMethods.ONE_POINT:
