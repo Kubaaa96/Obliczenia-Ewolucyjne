@@ -154,8 +154,8 @@ class Population:
     #
 
     def elite_strategy(self):
-        for elite_boy in range(0, self.elite_amount):
-            self.prepared_after_elite.append(self.prepared_to_crossing[elite_boy])  # objects after elite strategy
+        for elite_boy in range(0, self.elite_amount-1):
+            self.prepared_after_elite.append(self.population_list[elite_boy])  # objects after elite strategy
 
     # ----------------------------------------------MUTATION----------------------------------------------
     # pobierane jest prepared_to_crossing z selekcji dlatego ze to jedyna tablica z osobnikami na ten moment.
