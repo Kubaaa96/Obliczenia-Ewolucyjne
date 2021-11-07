@@ -9,22 +9,25 @@ class GeneticAlgorithm:
         self.parameters = parameters
 
     def perform_operations(self):
-        print(self.parameters) # Temp
+        print(self.parameters)  # Temp
 
         obj = Population(self.parameters)
         obj.create_population()
 
         for epoch in range(self.parameters.epochs_amount):
             print(f'\nStart of epoch {epoch}')
-            obj.selection()
-            #obj.elite_strategy()
-            obj.mutation()
             # TODO Evaluation
             # TODO Selection
+            obj.selection()
             # TODO Crossover
+            obj.cross()
             # TODO Mutation
+            obj.mutation()
             # TODO Inversion
+            obj.inversion()
             # TODO Elite Strategy
-
+            obj.elite_strategy()
         # TODO Generate Diagrams
         # TODO save to DataBase or txt file
+        for x in range(self.parameters.population_amount):
+            obj.save_results_to_txt_file('final_results', obj.population_list[x].x1.individual_coded+' '+obj.population_list[x].x2.individual_coded+'\n', x, self.parameters.population_amount)
