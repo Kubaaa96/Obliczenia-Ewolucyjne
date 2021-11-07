@@ -17,6 +17,8 @@ class GeneticAlgorithm:
 
         for epoch in range(self.parameters.epochs_amount):
             print(f'\nStart of epoch {epoch}')
+            obj.selection()
+            obj.mutation()
             # TODO Evaluation
             # TODO Selection
             # TODO Crossover

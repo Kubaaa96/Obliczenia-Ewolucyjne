@@ -1,6 +1,7 @@
 from core.parameters import Parameters
 from genetics.individual import Individual
 from core.selection_methods import SelectionMethods
+from core.mutation_methods import MutationMethods
 import random
 
 
@@ -144,28 +145,6 @@ class Population:
     # powinna byc pobierana tablica z krzyzowania, ale jeszcze jej nie ma. zwracane tez jest prepared_to_crossing
     # tylko ze z podmienionymi osobnikami
 
-    def side_mutation(self):
-        for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
-            rand_chance = random.uniform(0, 1)
-
-            if self.mutation_prob <= rand_chance:
-                x1 = self.prepared_to_crossing[i].x1.individual_coded
-                x2 = self.prepared_to_crossing[i].x2.individual_coded
-
-                if x1[-1] == '0':
-                    x1 = x1[:-1] + '1'
-                else:
-                    x1 = x1[:-1] + '0'
-
-                if x2[-1] == '0':
-                    x2 = x1[:-1] + '1'
-                else:
-                    x2 = x1[:-1] + '0'
-
-                x1 = self.prepared_to_crossing[i].x1.individual_decoded
-                x2 = self.prepared_to_crossing[i].x2.individual_decoded
-                self.prepared_to_crossing[i] = x1, x2
-
     def one_point_mutation(self):
         for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
             rand_chance = random.uniform(0, 1)
@@ -227,3 +206,33 @@ class Population:
                 x2 = self.prepared_to_crossing[i].x2.individual_decoded
 
                 self.prepared_to_crossing[i] = x1, x2
+
+    def side_mutation(self):
+        for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
+            rand_chance = random.uniform(0, 1)
+
+            if self.mutation_prob <= rand_chance:
+                x1 = self.prepared_to_crossing[i].x1.individual_coded
+                x2 = self.prepared_to_crossing[i].x2.individual_coded
+
+                if x1[-1] == '0':
+                    x1 = x1[:-1] + '1'
+                else:
+                    x1 = x1[:-1] + '0'
+
+                if x2[-1] == '0':
+                    x2 = x1[:-1] + '1'
+                else:
+                    x2 = x1[:-1] + '0'
+
+                x1 = self.prepared_to_crossing[i].x1.individual_decoded
+                x2 = self.prepared_to_crossing[i].x2.individual_decoded
+                self.prepared_to_crossing[i] = x1, x2
+
+    def mutation(self):
+        if self.parameters.mutation_method == MutationMethods.ONE_POINT:
+            self.one_point_mutation()
+        elif self.parameters.mutation_method == MutationMethods.TWO_POINT:
+            self.two_point_mutation()
+        else:
+            self.side_mutation()
