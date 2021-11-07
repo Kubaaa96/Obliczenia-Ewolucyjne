@@ -1,5 +1,6 @@
 from core.parameters import Parameters
 from genetics.individual import Individual
+from core.selection_methods import SelectionMethods
 import random
 
 
@@ -18,9 +19,6 @@ class Population:
     def create_population(self):
         for _ in range(self.population_size):
             self.population_list.append(Individual(self.parameters))
-            #print(self.population_list[_].x1.individual_coded)
-            #print(self.population_list[_].x1.individual_decoded)
-            #print(self.population_list[_].f_x)
 
     def best_selection(self):
         chance_to_rand = int(self.parameters.best_tournament_amount / 100 * self.population_size)
@@ -38,19 +36,20 @@ class Population:
                     temp_id.append(j)
                     sorted_list.remove(value)
         temp_id.sort()
-        print(temp_id)
+        #print(temp_id)
 
         for i in temp_id:
             self.prepared_to_crossing.append(self.population_list[i]) #objects prepared for crossing
 
-        #print(self.prepared_to_crossing[5])
+        #print(self.prepared_to_crossing[5].x1.individual_coded)
+        #print(self.prepared_to_crossing[5].x2.individual_coded)
 
     def tournament_selection(self):
         number_of_tournament = int(self.parameters.best_tournament_amount / 100 * self.population_size)
         number_of_individual_in_group = int(self.population_size / number_of_tournament)
 
         samples = random.sample(range(self.population_size), self.population_size)
-        print(samples)
+        #print(samples)
 
         temp = []
 
@@ -59,7 +58,7 @@ class Population:
             for j in range(number_of_individual_in_group):
                 temp_values.append(self.population_list[samples[i + j]].f_x)
             temp.append(temp_values)
-        print(temp)
+        #print(temp)
 
         new_values = []
 
@@ -67,7 +66,7 @@ class Population:
             value = (min(temp[i], key=lambda v: abs(v - 0)))
             new_values.append(value)
 
-        print(new_values)
+        #print(new_values)
 
         id_values = []
 
@@ -76,20 +75,66 @@ class Population:
                 if self.population_list[j].f_x == i:
                     id_values.append(j)
         id_values.sort()
-        print(id_values)
+        #print(id_values)
 
         for i in id_values:
             self.prepared_to_crossing.append(self.population_list[i]) #objects prepared for crossing
 
-        #print(self.prepared_to_crossing[5])
+        #print(self.prepared_to_crossing[5].x1.individual_coded)
+        #print(self.prepared_to_crossing[5].x2.individual_coded)
 
-    # TODO roulette_selection() -> deleted due to issue in implementation
-    # New solution in progress
+    def roulette_selection(self):
+        result = 0.0
+        probability_list = []
+        distrib_list = []
+
+        if self.parameters.maximization:
+            for i in self.population_list:
+                result += i.f_x
+            for i in range(0, self.population_size):
+                probability_list.append(self.population_list[i].f_x/result)
+
+            distrib_list.append(probability_list[0])
+            for i in range(1, self.population_size):
+                distrib_list.append(distrib_list[i-1] + probability_list[i])
+
+            #print(result)
+
+        else:
+            for i in self.population_list:
+                result += 1/i.f_x
+            for i in range(0, self.population_size):
+                probability_list.append((1/self.population_list[i].f_x) / result)
+
+            distrib_list.append(probability_list[0])
+            for i in range(1, self.population_size):
+                distrib_list.append(distrib_list[i - 1] + probability_list[i])
+
+            print(result)
+
+        #for i in range(0, self.population_size):
+            #print(distrib_list[i])
+
+        rand_chance = random.uniform(0, 1)
+
+        for i in range(0, self.population_size-1):
+            if distrib_list[i] < rand_chance < distrib_list[i + 1]:
+                self.prepared_to_crossing.append(self.population_list[i])
+        #print(len(self.prepared_to_crossing))
+
+    def selection(self):
+        if self.parameters.selection_method == SelectionMethods.BEST:
+            self.best_selection()
+        elif self.parameters.selection_method == SelectionMethods.ROULETTE:
+            self.roulette_selection()
+        else:
+            self.tournament_selection()
 
     # -----------------------------------------------ELITE-----------------------------------------------
     # prepared_after_elite to tablica ktora ma osobnikow wybranych z elitarnej strategii
     # na samym koncu trzeba ja dopisac do listy z osobnikami po wszystkich przejsciach
     #
+
     def elite_strategy(self):
         for elite_boy in range(0, self.elite_amount):
             self.prepared_after_elite.append(self.prepared_to_crossing[elite_boy])  # objects after elite strategy

@@ -10,12 +10,10 @@ class GeneticAlgorithm:
 
     def perform_operations(self):
         print(self.parameters) # Temp
-        # TODO Initialize Population X
 
         obj = Population(self.parameters)
         obj.create_population()
-        #obj.best_selection()
-        obj.tournament_selection()
+        obj.selection()
 
         for epoch in range(self.parameters.epochs_amount):
             print(f'\nStart of epoch {epoch}')
