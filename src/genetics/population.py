@@ -167,7 +167,6 @@ class Population:
                 x1 = self.prepared_to_crossing[i].x1.individual_decoded
                 x2 = self.prepared_to_crossing[i].x2.individual_decoded
                 self.prepared_to_crossing[i] = x1, x2
-                print("asa", self.prepared_to_crossing)
 
     def two_point_mutation(self):
         for i in range(len(self.prepared_to_crossing[self.elite_amount:])):

@@ -13,7 +13,6 @@ class GeneticAlgorithm:
 
         obj = Population(self.parameters)
         obj.create_population()
-        obj.selection()
 
         for epoch in range(self.parameters.epochs_amount):
             print(f'\nStart of epoch {epoch}')
