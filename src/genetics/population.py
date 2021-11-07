@@ -11,9 +11,9 @@ class Population:
         self.population_size = self.parameters.population_amount
         print(self.population_size)
         self.population_list = []
+        self.population_list = []
         self.prepared_to_crossing = []
         self.mutation_prob = self.parameters.mutation_prob              # MUTATION
-        self.num_of_bits = self.parameters.number_of_bits               # MUTATION
         self.elite_amount = self.parameters.elite_amount                # MUTATION
         self.prepared_after_elite = []                                  # ELITE STRATEGY
 
@@ -146,87 +146,84 @@ class Population:
     # tylko ze z podmienionymi osobnikami
 
     def one_point_mutation(self):
-        for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
-            rand_chance = random.uniform(0, 1)
+        population = self.population_list
+        bits = len(population[0].x1.individual_coded)
+        rand_chance = random.uniform(0, 1)
+        if self.mutation_prob <= rand_chance:
+            for i in range(self.population_size):
+                single_gen1 = population[i].x1.individual_coded
+                single_gen2 = population[i].x2.individual_coded
+                random_point = random.randint(0, bits)
+                single_gen_list1 = list(single_gen1)
+                single_gen_list2 = list(single_gen2)
 
-            if self.mutation_prob <= rand_chance:
-                x1 = self.prepared_to_crossing[i].x1.individual_coded
-                x2 = self.prepared_to_crossing[i].x2.individual_coded
-
-                random_point = random.randint(0, len(x1))
-                if x1[random_point] == '0':
-                    x1 = x1[:random_point] + '1' + x1[random_point+1:]
+                if single_gen_list1[random_point] == '1':
+                    single_gen_list1[random_point] = '0'
                 else:
-                    x1 = x1[:random_point] + '0' + x1[random_point+1:]
-
-                if x2[random_point] == '0':
-                    x2 = x2[:random_point] + '1' + x2[random_point+1:]
+                    single_gen_list1[random_point] = '1'
+                if single_gen_list2[random_point] == '1':
+                    single_gen_list2[random_point] = '0'
                 else:
-                    x2 = x2[:random_point] + '0' + x2[random_point+1:]
-
-                x1 = self.prepared_to_crossing[i].x1.individual_decoded
-                x2 = self.prepared_to_crossing[i].x2.individual_decoded
-                self.prepared_to_crossing[i] = x1, x2
+                    single_gen_list2[random_point] = '1'
+                single_gen1 = ''.join(single_gen_list1)
+                single_gen2 = ''.join(single_gen_list2)
 
     def two_point_mutation(self):
-        for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
-            rand_chance = random.uniform(0, 1)
+        population = self.population_list
+        bits = len(population[0].x1.individual_coded)
+        rand_chance = random.uniform(0, 1)
+        if self.mutation_prob <= rand_chance:
+            for i in range(self.population_size):
+                single_gen1 = population[i].x1.individual_coded
+                single_gen2 = population[i].x2.individual_coded
+                random_point = random.randint(0, bits)
+                random_point2 = random.randint(0, bits)
+                while random_point == random_point2:
+                    random_point2 = random.randint(0, bits)
+                single_gen_list1 = list(single_gen1)
+                single_gen_list2 = list(single_gen2)
 
-            if self.mutation_prob <= rand_chance:
-                x1 = self.prepared_to_crossing[i].x1.individual_coded
-                x2 = self.prepared_to_crossing[i].x2.individual_coded
-
-                random_point1 = random.randint(0, len(x1))
-                random_point2 = random.randint(0, len(x1))
-                while random_point1 == random_point2:
-                    random_point2 = random.randint(0, len(x1))
-
-                if x1[random_point1] == '0':
-                    x1 = x1[:random_point1] + '1' + x1[random_point1 + 1:]
+                if single_gen_list1[random_point] == '1':
+                    single_gen_list1[random_point] = '0'
                 else:
-                    x1 = x1[:random_point1] + '0' + x1[random_point1 + 1:]
-
-                if x1[random_point2] == '0':
-                    x1 = x1[:random_point2] + '1' + x1[random_point2 + 1:]
+                    single_gen_list1[random_point] = '1'
+                if single_gen_list2[random_point] == '1':
+                    single_gen_list2[random_point] = '0'
                 else:
-                    x1 = x1[:random_point2] + '0' + x1[random_point2 + 1:]
+                    single_gen_list2[random_point] = '1'
 
-                if x2[random_point1] == '0':
-                    x2 = x2[:random_point1] + '1' + x2[random_point1 + 1:]
+                if single_gen_list1[random_point2] == '1':
+                    single_gen_list1[random_point2] = '0'
                 else:
-                    x2 = x2[:random_point1] + '0' + x2[random_point1 + 1:]
-
-                if x2[random_point2] == '0':
-                    x2 = x2[:random_point2] + '1' + x2[random_point2 + 1:]
+                    single_gen_list1[random_point2] = '1'
+                if single_gen_list2[random_point2] == '1':
+                    single_gen_list2[random_point2] = '0'
                 else:
-                    x2 = x2[:random_point2] + '0' + x2[random_point2 + 1:]
-
-                x1 = self.prepared_to_crossing[i].x1.individual_decoded
-                x2 = self.prepared_to_crossing[i].x2.individual_decoded
-
-                self.prepared_to_crossing[i] = x1, x2
+                    single_gen_list2[random_point2] = '1'
+                single_gen1 = ''.join(single_gen_list1)
+                single_gen2 = ''.join(single_gen_list2)
 
     def side_mutation(self):
-        for i in range(len(self.prepared_to_crossing[self.elite_amount:])):
-            rand_chance = random.uniform(0, 1)
+        population = self.population_list
+        bits = len(population[0].x1.individual_coded)
+        rand_chance = random.uniform(0, 1)
+        if self.mutation_prob <= rand_chance:
+            for i in range(self.population_size):
+                single_gen1 = population[i].x1.individual_coded
+                single_gen2 = population[i].x2.individual_coded
+                single_gen_list1 = list(single_gen1)
+                single_gen_list2 = list(single_gen2)
 
-            if self.mutation_prob <= rand_chance:
-                x1 = self.prepared_to_crossing[i].x1.individual_coded
-                x2 = self.prepared_to_crossing[i].x2.individual_coded
-
-                if x1[-1] == '0':
-                    x1 = x1[:-1] + '1'
+                if single_gen_list1[-1] == '1':
+                    single_gen_list1[-1] = '0'
                 else:
-                    x1 = x1[:-1] + '0'
-
-                if x2[-1] == '0':
-                    x2 = x1[:-1] + '1'
+                    single_gen_list1[-1] = '1'
+                if single_gen_list2[-1] == '1':
+                    single_gen_list2[-1] = '0'
                 else:
-                    x2 = x1[:-1] + '0'
-
-                x1 = self.prepared_to_crossing[i].x1.individual_decoded
-                x2 = self.prepared_to_crossing[i].x2.individual_decoded
-                self.prepared_to_crossing[i] = x1, x2
+                    single_gen_list2[-1] = '1'
+                single_gen1 = ''.join(single_gen_list1)
+                single_gen2 = ''.join(single_gen_list2)
 
     def mutation(self):
         if self.parameters.mutation_method == MutationMethods.ONE_POINT:
