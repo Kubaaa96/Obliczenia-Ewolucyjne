@@ -260,7 +260,7 @@ class Population:
 
     def inversion(self):
         population = self.population_list
-        bits = len(population[0].x1.individual_coded)
+        bits = len(population[0].x1.individual_coded)-1
         if bits > 1:
             first_point = random.randint(0, bits)
             second_point = random.randint(0, bits)
@@ -346,7 +346,7 @@ class Population:
 
     def crossover_three_point(self):
         population = self.population_list
-        bits = len(population[0].x1.individual_coded)
+        bits = len(population[0].x1.individual_coded)-1
         cross_point = random.randint(0, bits - 2)
         cross_point2 = random.randint(0, bits - 1)
         cross_point3 = random.randint(0, bits)
