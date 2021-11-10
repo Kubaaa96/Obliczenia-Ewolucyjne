@@ -58,3 +58,4 @@ class GeneticAlgorithm:
         plt.ylabel('fitness function')
         absolute_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results'))
         plt.savefig(absolute_path+'\\graph.jpg')
+
