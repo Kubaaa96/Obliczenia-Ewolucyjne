@@ -190,7 +190,7 @@ class Population:
 
     def two_point_mutation(self):
         population = self.population_list
-        bits = len(population[0].x1.individual_coded)
+        bits = len(population[0].x1.individual_coded)-1
         rand_chance = random.uniform(0, 1)
         if self.mutation_prob <= rand_chance:
             for i in range(self.population_size):
@@ -378,7 +378,7 @@ class Population:
 
     def crossover_homogeneous(self):
         population = self.population_list
-        bits = len(population[0].x1.individual_coded)
+        bits = len(population[0].x1.individual_coded)-1
         rand_chance = random.uniform(0, 1)
         if rand_chance <= self.crossover_prob:
             for i in range(self.population_size):

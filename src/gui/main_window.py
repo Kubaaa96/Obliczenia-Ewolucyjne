@@ -1,5 +1,7 @@
+import time
+
 from PyQt6.QtWidgets import QMainWindow, QWidget, QLineEdit, QVBoxLayout, QLabel, QComboBox, QCheckBox, \
-    QPushButton
+    QPushButton, QDialog
 from PyQt6.QtCore import QPoint, QSize
 
 from core.selection_methods import SelectionMethods
@@ -7,6 +9,7 @@ from core.cross_methods import CrossMethods
 from core.mutation_methods import MutationMethods
 from core.parameters import Parameters
 from gui.utils.wrong_type_dialog import WrongTypeDialog
+from gui.utils.elapsed_time_dialog import ElapsedTimeDialog
 from genetics.genetic_algorithm import GeneticAlgorithm
 
 
@@ -127,7 +130,15 @@ class MainWindow(QMainWindow):
             dialog.exec()
         else:
             genetic_algorithm = GeneticAlgorithm(parameters)
+            start = time.time()
             genetic_algorithm.perform_operations()
+            end = time.time()
+            elapsed_time = end - start
+
+            time_info_dialog = ElapsedTimeDialog(elapsed_time)
+            time_info_dialog.exec()
+
+            print(elapsed_time)
 
         self.not_valid_widgets.clear()
 
