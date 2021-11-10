@@ -418,14 +418,13 @@ class Population:
             fitness_list.append(population[i].f_x)
             sorted_fitness.append(fitness_list[i])
         sorted_fitness.sort(reverse=True)
-
-        for j in range(0, len(fitness_list)-1):
+        for j in range(0, len(fitness_list)):
             if fitness_list[j] == sorted_fitness[0]:
-                best_guy[0].append(fitness_list[j])
+                best_guy.append(population[j])
                 break
         self.best_from_epoch = best_guy
 
-        print("best", self.best_from_epoch)
-        print('fitness', fitness_list)
-        print('sorted', sorted_fitness)
+        # print("best", self.best_from_epoch)
+        # print('fitness', fitness_list)
+        # print('sorted', sorted_fitness)
 
