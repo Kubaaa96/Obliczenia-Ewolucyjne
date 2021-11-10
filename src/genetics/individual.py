@@ -10,4 +10,4 @@ class Individual:
         self.f_x = self.fitness_func()
 
     def fitness_func(self):
-        return (1.5 - self.x1.individual_decoded + self.x1.individual_decoded * self.x1.individual_decoded)**2 + (2.25 - self.x1.individual_decoded + self.x1.individual_decoded * self.x1.individual_decoded**2)**2 + (6.625 - self.x1.individual_decoded + self.x1.individual_decoded * self.x1.individual_decoded**3)**2
+        return (1.5 - self.x1.individual_decoded + self.x1.individual_decoded * self.x2.individual_decoded)**2 + (2.25 - self.x1.individual_decoded + self.x1.individual_decoded * self.x2.individual_decoded**2)**2 + (6.625 - self.x1.individual_decoded + self.x1.individual_decoded * self.x2.individual_decoded**3)**2
