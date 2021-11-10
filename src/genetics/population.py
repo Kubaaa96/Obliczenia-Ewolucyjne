@@ -15,6 +15,7 @@ class Population:
         self.population_list = []
         self.prepared_to_crossing = []
         self.prepared_after_elite = []                                  # ELITE STRATEGY
+        self.best_from_epoch = []
         self.mutation_prob = self.parameters.mutation_prob              # MUTATION
         self.elite_amount = self.parameters.elite_amount                # MUTATION
         self.inversion_prob = self.parameters.inversion_prob
@@ -407,3 +408,11 @@ class Population:
             self.crossover_three_point()
         else:
             self.crossover_homogeneous()
+
+    def best_from_epoch(self):
+        best = self.prepared_after_elite
+        population = self.population_list
+        population.append(best)
+        population.sort(reverse=True)
+        self.best_from_epoch = population[0]
+
