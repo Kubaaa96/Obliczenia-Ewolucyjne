@@ -49,10 +49,10 @@ class GeneticAlgorithm:
         best_index_gen = int(best_temp[0][1])
         best_from_population_first = obj.population_list[best_index_gen].x1.individual_decoded
         best_from_population_second = obj.population_list[best_index_gen].x2.individual_decoded
-        obj.save_results_to_txt_file('best_from_epoch_numbers', str(best_from_population_first)+' '+str(best_from_population_second), x, self.parameters.population_amount)
+        obj.save_results_to_txt_file('best_from_epoch_numbers', str(best_from_population_first)+' '+str(best_from_population_second))
         best_from_population_first_bin = obj.population_list[best_index_gen].x1.individual_coded
         best_from_population_second_bin = obj.population_list[best_index_gen].x2.individual_coded
-        obj.save_results_to_txt_file('best_from_epoch_binary', best_from_population_first_bin+' '+best_from_population_second_bin, x, self.parameters.population_amount)
+        obj.save_results_to_txt_file('best_from_epoch_binary', best_from_population_first_bin+' '+best_from_population_second_bin)
         plt.plot(epoch_table, fitness_table)
         plt.xlabel('epoch')
         plt.ylabel('fitness function')
