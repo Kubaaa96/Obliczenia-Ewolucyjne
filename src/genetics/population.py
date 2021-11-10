@@ -409,10 +409,23 @@ class Population:
         else:
             self.crossover_homogeneous()
 
-    def best_from_epoch(self):
-        best = self.prepared_after_elite
+    def best_guy_from_epoch(self):
+        fitness_list = []
+        sorted_fitness = []
+        best_guy = self.best_from_epoch
         population = self.population_list
-        population.append(best)
-        population.sort(reverse=True)
-        self.best_from_epoch = population[0]
+        for i in range(len(population)-1):
+            fitness_list.append(population[i].f_x)
+            sorted_fitness.append(fitness_list[i])
+        sorted_fitness.sort(reverse=True)
+
+        for j in range(0, len(fitness_list)-1):
+            if fitness_list[j] == sorted_fitness[0]:
+                best_guy[0].append(fitness_list[j])
+                break
+        self.best_from_epoch = best_guy
+
+        print("best", self.best_from_epoch)
+        print('fitness', fitness_list)
+        print('sorted', sorted_fitness)
 
