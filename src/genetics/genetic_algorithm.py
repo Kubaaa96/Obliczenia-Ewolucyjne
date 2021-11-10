@@ -37,8 +37,8 @@ class GeneticAlgorithm:
         for x in range(self.parameters.population_amount):
             obj.save_results_to_txt_file('final_results_binary', obj.population_list[x].x1.individual_coded+' '+obj.population_list[x].x2.individual_coded+'\n', x, self.parameters.population_amount)
             obj.save_results_to_txt_file('final_results_numbers', str(obj.population_list[x].x1.individual_decoded)+' '+str(obj.population_list[x].x2.individual_decoded)+'\n', x, self.parameters.population_amount)
-            obj.save_results_to_txt_file('best_from_epoch_binary', obj.best_from_epoch[x].x1.individual_coded+' '+obj.best_from_epoch[x].x2.individual_coded+'\n', x, self.parameters.population_amount)
-            obj.save_results_to_txt_file('best_from_epoch_numbers', str(obj.best_from_epoch[x].x1.individual_decoded)+ ' ' + str(obj.best_from_epoch[x].x2.individual_decoded) + '\n', x, self.parameters.population_amount)
+            obj.save_results_to_txt_file('best_from_epoch_binary', obj.best_from_epoch[epoch].x1.individual_coded + ' ' + obj.best_from_epoch[epoch].x2.individual_coded + '\n', epoch, self.parameters.population_amount)
+            obj.save_results_to_txt_file('best_from_epoch_numbers',str(obj.best_from_epoch[epoch].x1.individual_decoded) + ' ' + str(obj.best_from_epoch[epoch].x2.individual_decoded) + '\n', epoch,self.parameters.population_amount)
             fitness_table.append(obj.population_list[x].f_x)
             epoch_table.append(x)
         plt.plot(epoch_table, fitness_table)
@@ -46,3 +46,4 @@ class GeneticAlgorithm:
         plt.ylabel('fitness function')
         absolute_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results'))
         plt.savefig(absolute_path+'\\graph.jpg')
+
