@@ -9,7 +9,6 @@ class GeneticAlgorithm:
         self.parameters = parameters
 
     def perform_operations(self):
-        print(self.parameters)  # Temp
         fitness_table = []
         epoch_table = []
         obj = Population(self.parameters)
@@ -19,7 +18,6 @@ class GeneticAlgorithm:
             obj.save_results_to_txt_file('beggining_population_binary', obj.population_list[x].x1.individual_coded+' '+obj.population_list[x].x2.individual_coded+'\n', x, self.parameters.population_amount)
             obj.save_results_to_txt_file('beggining_population_numbers', str(obj.population_list[x].x1.individual_decoded)+' '+str(obj.population_list[x].x2.individual_decoded)+'\n', x, self.parameters.population_amount)
         for epoch in range(self.parameters.epochs_amount):
-            print(f'\nStart of epoch {epoch}')
             # TODO Evaluation
             # TODO Selection
             obj.selection()
