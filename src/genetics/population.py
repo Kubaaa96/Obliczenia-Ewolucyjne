@@ -173,7 +173,7 @@ class Population:
             for i in range(self.population_size):
                 single_gen1 = population[i].x1
                 single_gen2 = population[i].x2
-                gen_chance = random.randint(int(self.a), int(self.b))
+                gen_chance = random.randint(0, 1)
                 if gen_chance == 0:
                     single_gen1 = random.randint(int(self.a), int(self.b))
                 else:
@@ -208,10 +208,10 @@ class Population:
                 single_gen2 = population[i].x2
                 gaussian_single_gen1 = single_gen1 + gauss
                 gaussian_single_gen2 = single_gen2 + gauss
-                while gaussian_single_gen1 > self.b or gaussian_single_gen1 < self.b:
+                while gaussian_single_gen1 > self.b or gaussian_single_gen1 < self.a:
                     gauss = np.random.normal(0, 1)
                     gaussian_single_gen1 = single_gen1 + gauss
-                while gaussian_single_gen2 > self.b or gaussian_single_gen2 < self.b:
+                while gaussian_single_gen2 > self.b or gaussian_single_gen2 < self.a:
                     gauss = np.random.normal(0, 1)
                     gaussian_single_gen2 = single_gen2 + gauss
                 single_gen1 = gaussian_single_gen1
@@ -234,7 +234,6 @@ class Population:
 
     def crossover_heuristic(self):
         pass
-
 
     def cross(self):
         if self.parameters.cross_method == CrossMethods.Arytmetyczne:
