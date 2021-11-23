@@ -22,16 +22,15 @@ class GeneticAlgorithm:
             obj.save_results_to_txt_file('beggining_population_binary', obj.population_list[x].x1.individual_coded+' '+obj.population_list[x].x2.individual_coded+'\n', x, self.parameters.population_amount)
             obj.save_results_to_txt_file('beggining_population_numbers', str(obj.population_list[x].x1.individual_decoded)+' '+str(obj.population_list[x].x2.individual_decoded)+'\n', x, self.parameters.population_amount)
         for epoch in range(self.parameters.epochs_amount):
-            # TODO Evaluation
-            # TODO Selection
+
             obj.selection()
-            # TODO Crossover
+
             obj.cross()
-            # TODO Mutation
+
             obj.mutation()
-            # TODO Inversion
+
             obj.inversion()
-            # TODO Elite Strategy
+
             obj.elite_strategy()
             obj.best_guy_from_epoch()
         # TODO Generate Diagrams

@@ -69,9 +69,6 @@ class MainWindow(QMainWindow):
         self.population_amount_lineedit.setPlaceholderText("Population amount")
         main_layout.addWidget(self.population_amount_lineedit)
 
-        self.number_of_bits_lineedit.setPlaceholderText("Number of bits")
-        main_layout.addWidget(self.number_of_bits_lineedit)
-
         self.epochs_amount_lineedit.setPlaceholderText("Epochs amount")
         main_layout.addWidget(self.epochs_amount_lineedit)
 
@@ -86,9 +83,6 @@ class MainWindow(QMainWindow):
 
         self.mutation_prob_lineedit.setPlaceholderText("Mutation probability")
         main_layout.addWidget(self.mutation_prob_lineedit)
-
-        self.inversion_prob_lineedit.setPlaceholderText("Inversion probability")
-        main_layout.addWidget(self.inversion_prob_lineedit)
 
         selection_label = QLabel("Choose selection method")
         main_layout.addWidget(selection_label)
@@ -147,13 +141,11 @@ class MainWindow(QMainWindow):
         parameters.begin_range = self.validate_numbers(self.begin_range_lineedit, "Not numerical Begin Range Value", float)
         parameters.end_range = self.validate_numbers(self.end_range_lineedit, "Not Numerical End Range Value", float)
         parameters.population_amount = self.validate_numbers(self.population_amount_lineedit, "Not Numerical Population Amount Value", int)
-        parameters.number_of_bits = self.validate_numbers(self.number_of_bits_lineedit, "Not Numerical Number of Bits Value", int)
         parameters.epochs_amount = self.validate_numbers(self.epochs_amount_lineedit, "Not Numerical Epochs Amount Value", int)
         parameters.best_tournament_amount = self.validate_numbers(self.best_tournament_amount_lineedit, "Not Numerical Best Tournament Amount Value", int)
         parameters.elite_amount = self.validate_numbers(self.elite_amount_lineedit, "Not Numerical Elite Amount Value", int)
         parameters.cross_prob = self.validate_probability(self.cross_prob_lineedit, "Not Numerical Cross Probability Value")
         parameters.mutation_prob = self.validate_probability(self.mutation_prob_lineedit, "Not Numerical Mutation Probability Value")
-        parameters.inversion_prob = self.validate_probability(self.inversion_prob_lineedit, "Not Numerical Inversion Probability Value")
         parameters.selection_method = SelectionMethods(self.selection_combobox.currentIndex())
         parameters.cross_method = CrossMethods(self.cross_combobox.currentIndex())
         parameters.mutation_method = MutationMethods(self.mutation_combobox.currentIndex())

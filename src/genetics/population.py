@@ -163,251 +163,30 @@ class Population:
     # powinna byc pobierana tablica z krzyzowania, ale jeszcze jej nie ma. zwracane tez jest prepared_to_crossing
     # tylko ze z podmienionymi osobnikami
 
-    def one_point_mutation(self):
-        population = self.population_list
-        bits = len(population[0].x1.individual_coded)-1
-        rand_chance = random.uniform(0, 1)
-        if self.mutation_prob <= rand_chance:
-            for i in range(self.population_size):
-                single_gen1 = population[i].x1.individual_coded
-                single_gen2 = population[i].x2.individual_coded
-                random_point = random.randint(0, bits)
-                single_gen_list1 = list(single_gen1)
-                single_gen_list2 = list(single_gen2)
+    def mutation_rownomierna(self):
+        pass
 
-                if single_gen_list1[random_point] == '1':
-                    single_gen_list1[random_point] = '0'
-                else:
-                    single_gen_list1[random_point] = '1'
-                if single_gen_list2[random_point] == '1':
-                    single_gen_list2[random_point] = '0'
-                else:
-                    single_gen_list2[random_point] = '1'
-                single_gen1 = ''.join(single_gen_list1)
-                single_gen2 = ''.join(single_gen_list2)
-                population[i].x1.individual_coded = single_gen1
-                population[i].x2.individual_coded = single_gen2
-            self.population_list = population
-
-    def two_point_mutation(self):
-        population = self.population_list
-        bits = len(population[0].x1.individual_coded)-1
-        rand_chance = random.uniform(0, 1)
-        if self.mutation_prob <= rand_chance:
-            for i in range(self.population_size):
-                single_gen1 = population[i].x1.individual_coded
-                single_gen2 = population[i].x2.individual_coded
-                random_point = random.randint(0, bits)
-                random_point2 = random.randint(0, bits)
-                while random_point == random_point2:
-                    random_point2 = random.randint(0, bits)
-                single_gen_list1 = list(single_gen1)
-                single_gen_list2 = list(single_gen2)
-
-                if single_gen_list1[random_point] == '1':
-                    single_gen_list1[random_point] = '0'
-                else:
-                    single_gen_list1[random_point] = '1'
-                if single_gen_list2[random_point] == '1':
-                    single_gen_list2[random_point] = '0'
-                else:
-                    single_gen_list2[random_point] = '1'
-
-                if single_gen_list1[random_point2] == '1':
-                    single_gen_list1[random_point2] = '0'
-                else:
-                    single_gen_list1[random_point2] = '1'
-                if single_gen_list2[random_point2] == '1':
-                    single_gen_list2[random_point2] = '0'
-                else:
-                    single_gen_list2[random_point2] = '1'
-                single_gen1 = ''.join(single_gen_list1)
-                single_gen2 = ''.join(single_gen_list2)
-                population[i].x1.individual_coded = single_gen1
-                population[i].x2.individual_coded = single_gen2
-            self.population_list = population
-
-    def side_mutation(self):
-        population = self.population_list
-        rand_chance = random.uniform(0, 1)
-        if self.mutation_prob <= rand_chance:
-            for i in range(self.population_size):
-                single_gen1 = population[i].x1.individual_coded
-                single_gen2 = population[i].x2.individual_coded
-                single_gen_list1 = list(single_gen1)
-                single_gen_list2 = list(single_gen2)
-
-                if single_gen_list1[-1] == '1':
-                    single_gen_list1[-1] = '0'
-                else:
-                    single_gen_list1[-1] = '1'
-                if single_gen_list2[-1] == '1':
-                    single_gen_list2[-1] = '0'
-                else:
-                    single_gen_list2[-1] = '1'
-                single_gen1 = ''.join(single_gen_list1)
-                single_gen2 = ''.join(single_gen_list2)
-                population[i].x1.individual_coded = single_gen1
-                population[i].x2.individual_coded = single_gen2
-            self.population_list = population
+    def mutation_gaussa(self):
+        pass
 
     def mutation(self):
-        if self.parameters.mutation_method == MutationMethods.ONE_POINT:
-            self.one_point_mutation()
-        elif self.parameters.mutation_method == MutationMethods.TWO_POINT:
-            self.two_point_mutation()
+        if self.parameters.mutation_method == MutationMethods.Rownomierna:
+            self.mutation_rownomierna()
         else:
-            self.side_mutation()
+            self.mutation_gaussa()
 
-    def inversion(self):
-        population = self.population_list
-        bits = len(population[0].x1.individual_coded)-1
-        if bits > 1:
-            first_point = random.randint(0, bits)
-            second_point = random.randint(0, bits)
-            while first_point == second_point:
-                second_point = random.randint(0, bits)
-            if first_point > second_point:
-                for i in range(self.population_size):
-                    single_gen = population[i].x1.individual_coded
-                    rand_chance = random.uniform(0, 1)
-                    if rand_chance <= self.inversion_prob:
-                        reverse_point = int(first_point+1/2)
-                        tempint = 0
-                        for x in range(second_point, reverse_point):
-                            single_gen_list = list(single_gen)
-                            temp = single_gen_list[x]
-                            single_gen_list[x] = single_gen_list[first_point - tempint]
-                            single_gen_list[first_point-tempint] = temp
-                            single_gen = ''.join(single_gen_list)
-                            tempint = tempint + 1
-                    population[i].x1.individual_coded = single_gen
-                else:
-                    for i in range(self.population_size):
-                        single_gen = population[i].x2.individual_coded
-                        rand_chance = random.uniform(0, 1)
-                        if rand_chance <= self.inversion_prob:
-                            reverse_point = int(second_point+1/2)
-                            tempint = 0
-                            for x in range(first_point, reverse_point):
-                                single_gen_list = list(single_gen)
-                                temp = single_gen_list[x]
-                                single_gen_list[x] = single_gen_list[second_point-tempint]
-                                single_gen_list[second_point-tempint] = temp
-                                single_gen = ''.join(single_gen_list)
-                                tempint = tempint + 1
-                    population[i].x2.individual_coded = single_gen
-        self.population_list = population
+    def crossover_arytmetyczna(self):
+        pass
 
-    def crossover_one_point(self):
-        population = self.population_list
-        bits = len(population[0].x1.individual_coded)-1
-        cross_point = random.randint(0, bits)
-        rand_chance = random.uniform(0, 1)
-        if rand_chance <= self.crossover_prob:
-            for i in range(self.population_size):
-                single_gen = population[i].x1.individual_coded
-                single_gen2 = population[i].x2.individual_coded
-                single_gen_list = list(single_gen)
-                single_gen_list2 = list(single_gen2)
-                for x in range(cross_point):
-                    temp = single_gen_list[x]
-                    single_gen_list[x] = single_gen_list2[x]
-                    single_gen_list2[x] = temp
-            single_gen = ''.join(single_gen_list)
-            single_gen2 = ''.join(single_gen_list2)
-            population[i].x1.individual_coded = single_gen
-            population[i].x2.individual_coded = single_gen2
-        self.population_list = population
+    def crossover_heurystyczna(self):
+        pass
 
-    def crossover_two_point(self):
-        population = self.population_list
-        bits = len(population[0].x1.individual_coded)-1
-        cross_point = random.randint(0, bits)
-        cross_point2 = random.randint(0, bits)
-        while cross_point > cross_point2:
-            cross_point = random.randint(0, bits)
-            cross_point2 = random.randint(0, bits)
-        rand_chance = random.uniform(0, 1)
-        if rand_chance <= self.crossover_prob:
-            for i in range(self.population_size):
-                single_gen = population[i].x1.individual_coded
-                single_gen2 = population[i].x2.individual_coded
-                single_gen_list = list(single_gen)
-                single_gen_list2 = list(single_gen2)
-                for x in range(cross_point, cross_point2):
-                    temp = single_gen_list[x]
-                    single_gen_list[x] = single_gen_list2[x]
-                    single_gen_list2[x] = temp
-            single_gen = ''.join(single_gen_list)
-            single_gen2 = ''.join(single_gen_list2)
-            population[i].x1.individual_coded = single_gen
-            population[i].x2.individual_coded = single_gen2
-        self.population_list = population
-
-    def crossover_three_point(self):
-        population = self.population_list
-        bits = len(population[0].x1.individual_coded)-1
-        cross_point = random.randint(0, bits - 2)
-        cross_point2 = random.randint(0, bits - 1)
-        cross_point3 = random.randint(0, bits)
-        while cross_point > cross_point2 or cross_point2 > cross_point3:
-            cross_point = random.randint(0, bits)
-            cross_point2 = random.randint(0, bits)
-            cross_point3 = random.randint(0, bits)
-        rand_chance = random.uniform(0, 1)
-        if rand_chance <= self.crossover_prob:
-            for i in range(self.population_size):
-                single_gen = population[i].x1.individual_coded
-                single_gen2 = population[i].x2.individual_coded
-                single_gen_list = list(single_gen)
-                single_gen_list2 = list(single_gen2)
-                for x in range(cross_point, cross_point2):
-                    temp = single_gen_list[x]
-                    single_gen_list[x] = single_gen_list2[x]
-                    single_gen_list2[x] = temp
-                for x in range(cross_point3, bits):
-                    temp = single_gen_list[x]
-                    single_gen_list[x] = single_gen_list2[x]
-                    single_gen_list2[x] = temp
-            single_gen = ''.join(single_gen_list)
-            single_gen2 = ''.join(single_gen_list2)
-            self.prepared_to_crossing.append([single_gen, single_gen2])
-            population[i].x1.individual_coded = single_gen
-            population[i].x2.individual_coded = single_gen2
-        self.population_list = population
-
-    def crossover_homogeneous(self):
-        population = self.population_list
-        bits = len(population[0].x1.individual_coded)-1
-        rand_chance = random.uniform(0, 1)
-        if rand_chance <= self.crossover_prob:
-            for i in range(self.population_size):
-                single_gen = population[i].x1.individual_coded
-                single_gen2 = population[i].x2.individual_coded
-                single_gen_list = list(single_gen)
-                single_gen_list2 = list(single_gen2)
-                gen_list_temp = list(single_gen)
-                gen_list_temp2 = list(single_gen2)
-                for x in range(1, bits - 1, 2):
-                    single_gen_list[x] = gen_list_temp2[x]
-                for x in range(0, bits - 1, 2):
-                    single_gen_list2[x] = gen_list_temp[x]
-            single_gen = ''.join(single_gen_list)
-            single_gen2 = ''.join(single_gen_list2)
-            population[i].x1.individual_coded = single_gen
-            population[i].x2.individual_coded = single_gen2
-        self.population_list = population
 
     def cross(self):
-        if self.parameters.cross_method == CrossMethods.ONE_POINT:
-            self.crossover_one_point()
-        elif self.parameters.cross_method == CrossMethods.TWO_POINT:
-            self.crossover_two_point()
-        elif self.parameters.cross_method == CrossMethods.THREE_POINTS:
-            self.crossover_three_point()
+        if self.parameters.cross_method == CrossMethods.Arytmetyczne:
+            self.crossover_arytmetyczna()
         else:
-            self.crossover_homogeneous()
+            self.crossover_heurystyczna()
 
     def best_guy_from_epoch(self):
         fitness_list = []
