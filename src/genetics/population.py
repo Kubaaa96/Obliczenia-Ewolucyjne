@@ -162,17 +162,15 @@ class Population:
             self.prepared_after_elite.append(self.population_list[elite_boy])  # objects after elite strategy
 
     # ----------------------------------------------MUTATION----------------------------------------------
-    # pobierane jest prepared_to_crossing z selekcji dlatego ze to jedyna tablica z osobnikami na ten moment.
-    # powinna byc pobierana tablica z krzyzowania, ale jeszcze jej nie ma. zwracane tez jest prepared_to_crossing
-    # tylko ze z podmienionymi osobnikami
+
 
     def mutation_uniform(self):
         population = self.population_list
         mutation_chance = random.uniform(0, 1)
         if self.mutation_prob <= mutation_chance:
             for i in range(self.population_size):
-                single_gen1 = population[i].x1
-                single_gen2 = population[i].x2
+                single_gen1 = population[i].x1.individual_decoded
+                single_gen2 = population[i].x2.individual_decoded
                 gen_chance = random.randint(0, 1)
                 if gen_chance == 0:
                     single_gen1 = random.randint(int(self.a), int(self.b))
@@ -188,8 +186,8 @@ class Population:
         mutation_chance = random.uniform(0, 1)
         if self.mutation_prob <= mutation_chance:
             for i in range(self.population_size):
-                single_gen1 = population[i].x1
-                single_gen2 = population[i].x2
+                single_gen1 = population[i].x1.individual_decoded
+                single_gen2 = population[i].x2.individual_decoded
                 temp = single_gen1
                 single_gen1 = single_gen2
                 single_gen2 = temp
@@ -204,8 +202,8 @@ class Population:
         if self.mutation_prob <= mutation_chance:
             gauss = np.random.normal(0, 1)
             for i in range(self.population_size):
-                single_gen1 = population[i].x1
-                single_gen2 = population[i].x2
+                single_gen1 = population[i].x1.individual_decoded
+                single_gen2 = population[i].x2.individual_decoded
                 gaussian_single_gen1 = single_gen1 + gauss
                 gaussian_single_gen2 = single_gen2 + gauss
                 while gaussian_single_gen1 > self.b or gaussian_single_gen1 < self.a:
