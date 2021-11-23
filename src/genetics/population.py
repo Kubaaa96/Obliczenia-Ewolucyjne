@@ -163,30 +163,30 @@ class Population:
     # powinna byc pobierana tablica z krzyzowania, ale jeszcze jej nie ma. zwracane tez jest prepared_to_crossing
     # tylko ze z podmienionymi osobnikami
 
-    def mutation_rownomierna(self):
+    def mutation_uniform(self):
         pass
 
-    def mutation_gaussa(self):
+    def mutation_gauss(self):
         pass
 
     def mutation(self):
         if self.parameters.mutation_method == MutationMethods.Rownomierna:
-            self.mutation_rownomierna()
+            self.mutation_uniform()
         else:
-            self.mutation_gaussa()
+            self.mutation_gauss()
 
-    def crossover_arytmetyczna(self):
+    def crossover_arithemtic(self):
         pass
 
-    def crossover_heurystyczna(self):
+    def crossover_heuristic(self):
         pass
 
 
     def cross(self):
         if self.parameters.cross_method == CrossMethods.Arytmetyczne:
-            self.crossover_arytmetyczna()
+            self.crossover_arithemtic()
         else:
-            self.crossover_heurystyczna()
+            self.crossover_heuristic()
 
     def best_guy_from_epoch(self):
         fitness_list = []

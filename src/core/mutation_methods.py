@@ -2,5 +2,5 @@ from enum import Enum
 
 
 class MutationMethods(Enum):
-    Rownomierna = 0
-    Gaussa = 1
+    Uniform = 0
+    Gauss = 1
