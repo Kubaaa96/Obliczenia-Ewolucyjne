@@ -4,6 +4,7 @@ from core.selection_methods import SelectionMethods
 from core.mutation_methods import MutationMethods
 from core.cross_methods import CrossMethods
 import random
+import numpy as np
 import os
 
 
@@ -20,6 +21,8 @@ class Population:
         self.elite_amount = self.parameters.elite_amount                # MUTATION
         self.inversion_prob = self.parameters.inversion_prob
         self.crossover_prob = self.parameters.cross_prob
+        self.a = self.parameters.begin_range
+        self.b = self.parameters.end_range
 
     def save_results_to_txt_file(self, file_name, data, current_range=0, end_range=0):
         absolute_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'results'))
@@ -164,14 +167,65 @@ class Population:
     # tylko ze z podmienionymi osobnikami
 
     def mutation_uniform(self):
-        pass
+        population = self.population_list
+        mutation_chance = random.uniform(0, 1)
+        if self.mutation_prob <= mutation_chance:
+            for i in range(self.population_size):
+                single_gen1 = population[i].x1
+                single_gen2 = population[i].x2
+                gen_chance = random.randint(int(self.a), int(self.b))
+                if gen_chance == 0:
+                    single_gen1 = random.randint(int(self.a), int(self.b))
+                else:
+                    single_gen2 = random.randint(int(self.a), int(self.b))
+
+                population[i].x1 = single_gen1
+                population[i].x2 = single_gen2
+            self.population_list = population
+
+    def mutation_index_swap(self):
+        population = self.population_list
+        mutation_chance = random.uniform(0, 1)
+        if self.mutation_prob <= mutation_chance:
+            for i in range(self.population_size):
+                single_gen1 = population[i].x1
+                single_gen2 = population[i].x2
+                temp = single_gen1
+                single_gen1 = single_gen2
+                single_gen2 = temp
+
+                population[i].x1 = single_gen1
+                population[i].x2 = single_gen2
+            self.population_list = population
 
     def mutation_gauss(self):
-        pass
+        population = self.population_list
+        mutation_chance = random.uniform(0, 1)
+        if self.mutation_prob <= mutation_chance:
+            gauss = np.random.normal(0, 1)
+            for i in range(self.population_size):
+                single_gen1 = population[i].x1
+                single_gen2 = population[i].x2
+                gaussian_single_gen1 = single_gen1 + gauss
+                gaussian_single_gen2 = single_gen2 + gauss
+                while gaussian_single_gen1 > self.b or gaussian_single_gen1 < self.b:
+                    gauss = np.random.normal(0, 1)
+                    gaussian_single_gen1 = single_gen1 + gauss
+                while gaussian_single_gen2 > self.b or gaussian_single_gen2 < self.b:
+                    gauss = np.random.normal(0, 1)
+                    gaussian_single_gen2 = single_gen2 + gauss
+                single_gen1 = gaussian_single_gen1
+                single_gen2 = gaussian_single_gen2
+
+                population[i].x1 = single_gen1
+                population[i].x2 = single_gen2
+            self.population_list = population
 
     def mutation(self):
         if self.parameters.mutation_method == MutationMethods.Rownomierna:
             self.mutation_uniform()
+        elif self.parameters.mutation_method == MutationMethods.IndexSwap:
+            self.mutation_index_swap()
         else:
             self.mutation_gauss()
 
