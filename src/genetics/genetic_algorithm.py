@@ -29,8 +29,6 @@ class GeneticAlgorithm:
 
             obj.mutation()
 
-            obj.inversion()
-
             obj.elite_strategy()
             obj.best_guy_from_epoch()
         # TODO Generate Diagrams
