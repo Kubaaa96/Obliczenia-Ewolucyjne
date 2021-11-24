@@ -131,7 +131,7 @@ class Population:
             for i in range(1, self.population_size):
                 distrib_list.append(distrib_list[i - 1] + probability_list[i])
 
-            print(result)
+            #print(result)
 
         # for i in range(0, self.population_size):
             # print(distrib_list[i])
@@ -227,10 +227,55 @@ class Population:
             self.mutation_gauss()
 
     def crossover_arithemtic(self):
-        pass
+        population = self.population_list
+        rand_chance = random.uniform(0, 1)
+        if rand_chance <= self.crossover_prob:
+            k_param = random.uniform(0, 1)
+            for i in range(0,self.population_size,2):
+                x1 = population[i].x1.individual_decoded
+                y1 = population[i].x2.individual_decoded
+                if i < self.population_size:
+                    x2 = population[i+1].x1.individual_decoded
+                    y2 = population[i+1].x2.individual_decoded
+                else:
+                    x2 = population[0].x1.individual_decoded
+                    y2 = population[0].x2.individual_decoded
+                x1_new = k_param * x1 + (1-k_param) * x2
+                y1_new = k_param * y1 + (1-k_param) * y2
+                x2_new = (1-k_param) * x1 + k_param * x2
+                y2_new = (1-k_param) * y1 + k_param * y2
+                #print(str(x1_new)+' '+str(y1_new)+' '+str(x2_new)+' '+str(y2_new))
+                population[i].x1.individual_coded = x1_new
+                population[i].x2.individual_coded = y1_new
+                if i < self.population_size:
+                    population[i+1].x1.individual_coded = x2_new
+                    population[i+1].x2.individual_coded = y2_new
+                else:
+                    population[0].x1.individual_coded = x2_new
+                    population[0].x2.individual_coded = y2_new               
+            self.population_list = population
 
     def crossover_heuristic(self):
-        pass
+        population = self.population_list
+        rand_chance = random.uniform(0, 1)
+        if rand_chance <= self.crossover_prob:
+            k_param = random.uniform(0, 1)
+            for i in range(self.population_size):
+                x1 = population[i].x1.individual_decoded
+                y1 = population[i].x2.individual_decoded
+                random_choose = random.randint(0, self.population_size-1)
+                x2 = population[random_choose].x1.individual_decoded
+                y2 = population[random_choose].x2.individual_decoded
+                while x1>x2 and y1>y2:
+                    random_choose = random.randint(0, self.population_size-1)
+                    x2 = population[random_choose].x1.individual_decoded
+                    y2 = population[random_choose].x2.individual_decoded
+                x1_new = k_param * (x2-x1) + x1
+                y1_new = k_param * (y2-y1) + y1
+                #print(str(x1_new)+' '+str(y1_new))
+                population[i].x1.individual_coded = x1_new
+                population[i].x2.individual_coded = y1_new
+            self.population_list = population
 
     def cross(self):
         if self.parameters.cross_method == CrossMethods.Arithmetic:

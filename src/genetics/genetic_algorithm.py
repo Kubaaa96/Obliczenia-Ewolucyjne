@@ -26,7 +26,7 @@ class GeneticAlgorithm:
 
             obj.cross()
 
-            obj.mutation()
+            #obj.mutation()
 
             obj.elite_strategy()
             obj.best_guy_from_epoch()
