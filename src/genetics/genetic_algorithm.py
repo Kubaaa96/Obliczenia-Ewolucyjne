@@ -23,11 +23,8 @@ class GeneticAlgorithm:
         for epoch in range(self.parameters.epochs_amount):
 
             obj.selection()
-
             obj.cross()
-
-            #obj.mutation()
-
+            obj.mutation()
             obj.elite_strategy()
             obj.best_guy_from_epoch()
         # TODO Generate Diagrams

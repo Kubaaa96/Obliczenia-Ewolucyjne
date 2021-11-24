@@ -176,8 +176,8 @@ class Population:
                 else:
                     single_gen2 = random.randint(int(self.a), int(self.b))
 
-                population[i].x1 = single_gen1
-                population[i].x2 = single_gen2
+                population[i].x1.individual_decoded = single_gen1
+                population[i].x2.individual_decoded = single_gen2
             self.population_list = population
 
     def mutation_index_swap(self):
@@ -191,8 +191,8 @@ class Population:
                 single_gen1 = single_gen2
                 single_gen2 = temp
 
-                population[i].x1 = single_gen1
-                population[i].x2 = single_gen2
+                population[i].x1.individual_decoded = single_gen1
+                population[i].x2.individual_decoded = single_gen2
             self.population_list = population
 
     def mutation_gauss(self):
@@ -203,19 +203,19 @@ class Population:
             for i in range(self.population_size):
                 single_gen1 = population[i].x1.individual_decoded
                 single_gen2 = population[i].x2.individual_decoded
-                gaussian_single_gen1 = single_gen1 + gauss
-                gaussian_single_gen2 = single_gen2 + gauss
+                gaussian_single_gen1 = float(single_gen1 + gauss)
+                gaussian_single_gen2 = float(single_gen2 + gauss)
                 while gaussian_single_gen1 > self.b or gaussian_single_gen1 < self.a:
                     gauss = np.random.normal(0, 1)
-                    gaussian_single_gen1 = single_gen1 + gauss
+                    gaussian_single_gen1 = float(single_gen1 + gauss)
                 while gaussian_single_gen2 > self.b or gaussian_single_gen2 < self.a:
                     gauss = np.random.normal(0, 1)
-                    gaussian_single_gen2 = single_gen2 + gauss
+                    gaussian_single_gen2 = float(single_gen2 + gauss)
                 single_gen1 = gaussian_single_gen1
                 single_gen2 = gaussian_single_gen2
 
-                population[i].x1 = single_gen1
-                population[i].x2 = single_gen2
+                population[i].x1.individual_decoded = single_gen1
+                population[i].x2.individual_decoded = single_gen2
             self.population_list = population
 
     def mutation(self):
@@ -245,14 +245,14 @@ class Population:
                 x2_new = (1-k_param) * x1 + k_param * x2
                 y2_new = (1-k_param) * y1 + k_param * y2
                 #print(str(x1_new)+' '+str(y1_new)+' '+str(x2_new)+' '+str(y2_new))
-                population[i].x1.individual_coded = x1_new
-                population[i].x2.individual_coded = y1_new
+                population[i].x1.individual_decoded = x1_new
+                population[i].x2.individual_decoded = y1_new
                 if i < self.population_size:
-                    population[i+1].x1.individual_coded = x2_new
-                    population[i+1].x2.individual_coded = y2_new
+                    population[i+1].x1.individual_decoded = x2_new
+                    population[i+1].x2.individual_decoded = y2_new
                 else:
-                    population[0].x1.individual_coded = x2_new
-                    population[0].x2.individual_coded = y2_new               
+                    population[0].x1.individual_decoded = x2_new
+                    population[0].x2.individual_decoded = y2_new
             self.population_list = population
 
     def crossover_heuristic(self):
@@ -273,8 +273,8 @@ class Population:
                 x1_new = k_param * (x2-x1) + x1
                 y1_new = k_param * (y2-y1) + y1
                 #print(str(x1_new)+' '+str(y1_new))
-                population[i].x1.individual_coded = x1_new
-                population[i].x2.individual_coded = y1_new
+                population[i].x1.individual_decoded = x1_new
+                population[i].x2.individual_decoded = y1_new
             self.population_list = population
 
     def cross(self):
