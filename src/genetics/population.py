@@ -66,8 +66,8 @@ class Population:
         # print(self.prepared_to_crossing[5].x2.individual_coded)
 
     def tournament_selection(self):
-        number_of_tournament = int(self.parameters.best_tournament_amount / 100 * self.population_size)
-        number_of_individual_in_group = int(self.population_size / number_of_tournament)
+        number_of_tournament = int(round(self.parameters.best_tournament_amount / 100 * self.population_size))
+        number_of_individual_in_group = int(round(self.population_size / number_of_tournament))
 
         samples = random.sample(range(self.population_size), self.population_size)
         # print(samples)
