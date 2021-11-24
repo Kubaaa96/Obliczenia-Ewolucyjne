@@ -19,7 +19,6 @@ class Population:
         self.best_from_epoch = []
         self.mutation_prob = self.parameters.mutation_prob              # MUTATION
         self.elite_amount = self.parameters.elite_amount                # MUTATION
-        self.inversion_prob = self.parameters.inversion_prob
         self.crossover_prob = self.parameters.cross_prob
         self.a = self.parameters.begin_range
         self.b = self.parameters.end_range
@@ -220,7 +219,7 @@ class Population:
             self.population_list = population
 
     def mutation(self):
-        if self.parameters.mutation_method == MutationMethods.Rownomierna:
+        if self.parameters.mutation_method == MutationMethods.Uniform:
             self.mutation_uniform()
         elif self.parameters.mutation_method == MutationMethods.IndexSwap:
             self.mutation_index_swap()
@@ -234,7 +233,7 @@ class Population:
         pass
 
     def cross(self):
-        if self.parameters.cross_method == CrossMethods.Arytmetyczne:
+        if self.parameters.cross_method == CrossMethods.Arithmetic:
             self.crossover_arithemtic()
         else:
             self.crossover_heuristic()

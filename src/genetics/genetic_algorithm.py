@@ -19,7 +19,6 @@ class GeneticAlgorithm:
         obj.create_population()
 
         for x in range(self.parameters.population_amount):
-            obj.save_results_to_txt_file('beggining_population_binary', obj.population_list[x].x1.individual_coded+' '+obj.population_list[x].x2.individual_coded+'\n', x, self.parameters.population_amount)
             obj.save_results_to_txt_file('beggining_population_numbers', str(obj.population_list[x].x1.individual_decoded)+' '+str(obj.population_list[x].x2.individual_decoded)+'\n', x, self.parameters.population_amount)
         for epoch in range(self.parameters.epochs_amount):
 
@@ -34,10 +33,8 @@ class GeneticAlgorithm:
         # TODO Generate Diagrams
         # TODO save to DataBase or txt file
         for x in range(self.parameters.population_amount):
-            obj.save_results_to_txt_file('final_results_binary', obj.population_list[x].x1.individual_coded+' '+obj.population_list[x].x2.individual_coded+'\n', x, self.parameters.population_amount)
             obj.save_results_to_txt_file('final_results_numbers', str(obj.population_list[x].x1.individual_decoded)+' '+str(obj.population_list[x].x2.individual_decoded)+'\n', x, self.parameters.population_amount)
-            #obj.save_results_to_txt_file('best_from_epoch_binary', obj.best_from_epoch[x].x1.individual_coded+' '+obj.best_from_epoch[x].x2.individual_coded+'\n', x, self.parameters.population_amount)
-            #obj.save_results_to_txt_file('best_from_epoch_numbers', str(obj.best_from_epoch[x].x1.individual_decoded)+ ' ' + str(obj.best_from_epoch[x].x2.individual_decoded) + '\n', x, self.parameters.population_amount)
+            obj.save_results_to_txt_file('best_from_epoch_numbers', str(obj.best_from_epoch[x].x1.individual_decoded)+ ' ' + str(obj.best_from_epoch[x].x2.individual_decoded) + '\n', x, self.parameters.population_amount)
             fitness_table.append(obj.population_list[x].f_x)
             epoch_table.append(x)
             best_temp.append([obj.population_list[x].f_x,x])
@@ -47,9 +44,6 @@ class GeneticAlgorithm:
         best_from_population_first = obj.population_list[best_index_gen].x1.individual_decoded
         best_from_population_second = obj.population_list[best_index_gen].x2.individual_decoded
         obj.save_results_to_txt_file('best_from_epoch_numbers', str(best_from_population_first)+' '+str(best_from_population_second))
-        best_from_population_first_bin = obj.population_list[best_index_gen].x1.individual_coded
-        best_from_population_second_bin = obj.population_list[best_index_gen].x2.individual_coded
-        obj.save_results_to_txt_file('best_from_epoch_binary', best_from_population_first_bin+' '+best_from_population_second_bin)
         plt.plot(epoch_table, fitness_table)
         plt.xlabel('epoch')
         plt.ylabel('fitness function')
